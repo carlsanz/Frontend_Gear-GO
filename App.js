@@ -3,6 +3,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import LandingPage from './Screens/LandingPage';
 import Login from './Screens/Login';
+import Registro  from './Screens/Registro';
+import RegistroD from './Screens/RegistroD';
+import RegistroId from './Screens/RegistroId';
 
 const Stack = createStackNavigator();
 
@@ -12,6 +15,9 @@ export default function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="LandingPage" component={LandingPage} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Registro" component={Registro} />
+        <Stack.Screen name="RegistroD" component={RegistroD} />
+        <Stack.Screen name="RegistroId" component={RegistroId} />
       </Stack.Navigator>
     </NavigationContainer>
   );
