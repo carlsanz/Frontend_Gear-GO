@@ -98,7 +98,7 @@ export default function RegistroId() {
 
         <View style={{ marginTop: 10, alignItems: "center", width: "100%" }}>
           <TouchableOpacity style={styles.botonContinuar}>
-            <Text style={styles.textoBoton}>Enviar</Text>
+            <Text style={styles.textoBoton} onPress={() => navigation.navigate("Bienvenido")}>Enviar</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
