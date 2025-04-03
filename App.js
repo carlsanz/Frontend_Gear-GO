@@ -12,6 +12,8 @@ import LandingPage from './Screens/LandingPage';
 import Registro  from './Screens/Registro';
 import RegistroD from './Screens/RegistroD';
 import RegistroId from './Screens/RegistroId';
+import Categoria from "./Screens/Categoria";
+import Rentadas from "./Screens/Rentadas";
 import Bienvenido from './Screens/Bienvenido';
 import Home from './Screens/Home';
 
@@ -47,6 +49,8 @@ export default function App() {
         <Stack.Screen name="RegistroId" component={RegistroId} />
         <Stack.Screen name="Bienvenido" component={Bienvenido} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Categoria" component={Categoria} />
+        <Stack.Screen name="Rentadas" component={Rentadas} />
       </Stack.Navigator>
     </NavigationContainer>
     </MessageProvider>
