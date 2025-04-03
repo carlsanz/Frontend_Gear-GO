@@ -13,6 +13,7 @@ import Registro  from './Screens/Registro';
 import RegistroD from './Screens/RegistroD';
 import RegistroId from './Screens/RegistroId';
 import Bienvenido from './Screens/Bienvenido';
+import Home from './Screens/Home';
 
 const Stack = createStackNavigator();
 
@@ -45,6 +46,7 @@ export default function App() {
         <Stack.Screen name="RegistroD" component={RegistroD} />
         <Stack.Screen name="RegistroId" component={RegistroId} />
         <Stack.Screen name="Bienvenido" component={Bienvenido} />
+        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
     </MessageProvider>
