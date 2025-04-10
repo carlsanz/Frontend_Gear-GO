@@ -16,6 +16,9 @@ import Categoria from "./Screens/Categoria";
 import Rentadas from "./Screens/Rentadas";
 import Bienvenido from './Screens/Bienvenido';
 import Home from './Screens/Home';
+import Pagos from './Screens/Pagos';
+import MetodoPago from './Screens/MetodoPago';
+import Tarjeta from './Screens/Tarjeta';
 
 const Stack = createStackNavigator();
 
@@ -51,6 +54,9 @@ export default function App() {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Categoria" component={Categoria} />
         <Stack.Screen name="Rentadas" component={Rentadas} />
+        <Stack.Screen name="Pagos" component={Pagos} />
+        <Stack.Screen name="MetodoPago" component={MetodoPago} />
+        <Stack.Screen name="Tarjeta" component={Tarjeta} />
       </Stack.Navigator>
     </NavigationContainer>
     </MessageProvider>

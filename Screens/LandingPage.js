@@ -52,7 +52,7 @@ export default function LandingPage() {
         </Text>
 
         <View style={styles.botonRedondeadoInfo}>
-          <Button  style={styles.buttonInfo} title="Registrarme" color="#FF1B1C" onPress={() => navigation.navigate("Home")} /> 
+          <Button  style={styles.buttonInfo} title="Registrarme" color="#FF1B1C" onPress={() => navigation.navigate("Pagos")} /> 
         </View>
         
       </View>
