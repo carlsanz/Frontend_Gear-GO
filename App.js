@@ -1,9 +1,10 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat";
+import { useFonts } from "expo-font"
+import { Montserrat_100Thin, Montserrat_400Regular, Montserrat_300Light } from '@expo-google-fonts/montserrat';
+import { BebasNeue_400Regular  } from "@expo-google-fonts/bebas-neue";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
-
 
 import { MessageProvider } from './Screens/MessageProvider';
 import Login from "./Screens/Login";
@@ -16,6 +17,10 @@ import Categoria from "./Screens/Categoria";
 import Rentadas from "./Screens/Rentadas";
 import Bienvenido from './Screens/Bienvenido';
 import Home from './Screens/Home';
+import Pagos from './Screens/Pagos';
+import MetodoPago from './Screens/MetodoPago';
+import Tarjeta from './Screens/Tarjeta';
+import NuevaHerramienta from './Screens/NuevaHerramienta';
 
 const Stack = createStackNavigator();
 
@@ -24,7 +29,8 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    Montserrat: Montserrat_400Regular,
+    Montserrat_400Regular,
+    BebasNeue_400Regular,
   });
 
   const onLayoutRootView = useCallback(async () => {
@@ -51,6 +57,10 @@ export default function App() {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Categoria" component={Categoria} />
         <Stack.Screen name="Rentadas" component={Rentadas} />
+        <Stack.Screen name="Pagos" component={Pagos} />
+        <Stack.Screen name="MetodoPago" component={MetodoPago} />
+        <Stack.Screen name="Tarjeta" component={Tarjeta} />
+        <Stack.Screen name="NuevaHerramienta" component={LandingPage}/>
       </Stack.Navigator>
     </NavigationContainer>
     </MessageProvider>
