@@ -13,7 +13,7 @@ const rentedTools = [
   { id: "1", name: "SIERRA", timeLeft: "2 días", price: "Semana: 500 HNL", client: "Joel Vasquez", image: require("../assets/desarmadores.jpg") }
 ];
 
-const ToolBoxAgg = () => {
+const ToolBoxAgg = ({navigation}) => {
   const [selectedTab, setSelectedTab] = useState("todas");
 
   // Selección de herramientas según la pestaña activa
@@ -94,24 +94,24 @@ const ToolBoxAgg = () => {
 
       {/* Botón flotante */}
       {selectedTab !== "renta" && (
-        <TouchableOpacity style={styles.floatingButton}>
+        <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate("NuevaHerramienta")}>
           <FontAwesome name="plus" size={24} color="white" />
         </TouchableOpacity>
       )}
 
       {/* Barra de navegación */}
-      <View style={styles.navBar}>
-        <TouchableOpacity>
-          <FontAwesome name="shopping-cart" size={30} color="black" />
-          <Text style={styles.navText}>Rentadas</Text>
+      <View style={{ flexDirection: "row", justifyContent: "space-around", paddingVertical: 12, backgroundColor: "white", borderTopWidth: 1, borderColor: "#E5E7EB" }}>
+        <TouchableOpacity onPress={() => navigation.navigate("Rentadas")} style={{ alignItems: "center" }}>
+          <FontAwesome name="shopping-cart" size={24} color="black" />
+          <Text style={{ textAlign: "center", fontSize: 12 }}>Rentadas</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Image source={require("../assets/iconoHome.png")} style={styles.homeIcon} />
+        <TouchableOpacity onPress={() => navigation.navigate("Home")} style={{ alignItems: "center" }}>
+          <Image source={require("../assets/iconoHome.png")} style={{ width: 30, height: 30 }} />
           <Text style={styles.navText}>Inicio</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <FontAwesome name="briefcase" size={30} color="#F97316" />
-          <Text style={[styles.navText, styles.activeNavText]}>ToolBox</Text>
+        <TouchableOpacity style={{ alignItems: "center" }} >
+          <FontAwesome name="briefcase" size={24} color="#F97316" />
+          <Text style={{ fontSize: 12, color: "#F97316",  }}>ToolBox</Text>
         </TouchableOpacity>
       </View>
     </View>

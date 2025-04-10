@@ -8,7 +8,7 @@ const rentedTools = [
   ];
 
 
-const Rentadas = () => {
+const Rentadas = ({navigation}) => {
 
     return(
         <View style={{ flex: 1, backgroundColor: "#F5F5F5" }}>
@@ -46,18 +46,18 @@ const Rentadas = () => {
     
         
               {/* Barra de navegación */}
-              <View style={styles.navBar}>
-                <TouchableOpacity>
-                  <FontAwesome name="shopping-cart" size={30} color="#F97316" />
-                  <Text style={styles.activeNavText}>Rentadas</Text>
+              <View style={{ flexDirection: "row", justifyContent: "space-around", paddingVertical: 12, backgroundColor: "white", borderTopWidth: 1, borderColor: "#E5E7EB" }}>
+                <TouchableOpacity style={{ alignItems: "center" }}>
+                  <FontAwesome name="shopping-cart" size={24} color="#F97316" />
+                  <Text style={{ textAlign: "center", fontSize: 12, color:"#F97316" }}>Rentadas</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                  <Image source={require("../assets/iconoHome.png")} style={styles.homeIcon} />
+                <TouchableOpacity style={{ alignItems: "center" }} onPress={() => navigation.navigate("Home")}>
+                  <Image source={require("../assets/iconoHome.png")} style={{ width: 30, height: 30 }}/>
                   <Text style={styles.navText}>Inicio</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                  <FontAwesome name="briefcase" size={30} color="black" />
-                  <Text style={[styles.navText, styles.navText]}>ToolBox</Text>
+                <TouchableOpacity style={{ alignItems: "center" }} onPress={() => navigation.navigate("ToolBoxAgg")}>
+                  <FontAwesome name="briefcase" size={24} color="black" />
+                  <Text style={styles.navText} >ToolBox</Text>
                 </TouchableOpacity>
               </View>
             </View>
