@@ -106,7 +106,7 @@ const ToolBoxAgg = ({navigation}) => {
           <Text style={{ textAlign: "center", fontSize: 12 }}>Rentadas</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Home")} style={{ alignItems: "center" }}>
-          <Image source={require("../assets/iconoHome.png")} style={{ width: 30, height: 30 }} />
+          <Image source={require("../assets/iconoHome.png")} style={{ width: 40, height: 30 }} />
           <Text style={styles.navText}>Inicio</Text>
         </TouchableOpacity>
         <TouchableOpacity style={{ alignItems: "center" }} >

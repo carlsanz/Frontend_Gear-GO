@@ -21,6 +21,7 @@ import Pagos from './Screens/Pagos';
 import MetodoPago from './Screens/MetodoPago';
 import Tarjeta from './Screens/Tarjeta';
 import NuevaHerramienta from './Screens/NuevaHerramienta';
+import DetalleHerramienta from "./Screens/DetalleHerramienta";
 
 const Stack = createStackNavigator();
 
@@ -47,7 +48,7 @@ export default function App() {
     <MessageProvider>
     <NavigationContainer onReady={onLayoutRootView}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="LandingPage" component={LandingPage} />
+        <Stack.Screen name="LandingPage" component={DetalleHerramienta} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="ToolBoxAgg" component={ToolBoxAgg} />
         <Stack.Screen name="Registro" component={Registro} />
@@ -60,7 +61,8 @@ export default function App() {
         <Stack.Screen name="Pagos" component={Pagos} />
         <Stack.Screen name="MetodoPago" component={MetodoPago} />
         <Stack.Screen name="Tarjeta" component={Tarjeta} />
-        <Stack.Screen name="NuevaHerramienta" component={LandingPage}/>
+        <Stack.Screen name="NuevaHerramienta" component={NuevaHerramienta}/>
+        <Stack.Screen name="DetalleHerramienta" component={LandingPage} />
       </Stack.Navigator>
     </NavigationContainer>
     </MessageProvider>
