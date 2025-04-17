@@ -22,6 +22,11 @@ import MetodoPago from './Screens/MetodoPago';
 import Tarjeta from './Screens/Tarjeta';
 import NuevaHerramienta from './Screens/NuevaHerramienta';
 import DetalleHerramienta from "./Screens/DetalleHerramienta";
+import Admin from './Screens/Admin';
+import ToolsApproval from './Screens/ToolsApproval';
+import ToolsDetails from './Screens/ToolsDetails';
+import UserApproval from './Screens/UserApproval';
+import UserDetails from './Screens/UserDetails';
 
 const Stack = createStackNavigator();
 
@@ -63,6 +68,11 @@ export default function App() {
         <Stack.Screen name="Tarjeta" component={Tarjeta} />
         <Stack.Screen name="NuevaHerramienta" component={NuevaHerramienta}/>
         <Stack.Screen name="DetalleHerramienta" component={LandingPage} />
+        <Stack.Screen name="Admin" component={Admin} />
+        <Stack.Screen name="ToolsApproval" component={ToolsApproval} />
+        <Stack.Screen name="ToolsDetails" component={ToolsDetails} />
+        <Stack.Screen name="UserApproval" component={UserApproval} />
+        <Stack.Screen name="UserDetails" component={UserDetails} />
       </Stack.Navigator>
     </NavigationContainer>
     </MessageProvider>
