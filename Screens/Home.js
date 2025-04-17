@@ -15,10 +15,10 @@ const Home = ({navigation}) => {
     return (
         <View style={{ flex: 1, backgroundColor: "#F5F5F5" }}>
             {/* Encabezado */}
-            <View style={{ backgroundColor: "#F97316", padding: 20, height: 140, flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
+            <View style={{ backgroundColor: "#F97316", padding: 20, height: 170, flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
                 <FontAwesome name="bars" size={24} color="white" />
                 <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>GEAR-GO</Text>
-                <Image source={{ uri: "https://randomuser.me/api/portraits/men/1.jpg" }} style={{ width: 40, height: 40, borderRadius: 20 }} />
+                <Image source={require("../assets/perfil.jpeg")} style={{width: 50, height: 50, borderRadius: 30}} />
             </View>
 
             {/* Barra de búsqueda */}
@@ -49,7 +49,7 @@ const Home = ({navigation}) => {
                         <Text style={{ fontSize: 12, color: "gray", marginVertical: 4 }}>{item.price}</Text>
                         {item.description && <Text style={{ fontSize: 10, color: "gray" }}>{item.description}</Text>}
                         <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 8 }}>
-                            <TouchableOpacity style={{ backgroundColor: "#F97316", paddingVertical: 5, paddingHorizontal: 10, borderRadius: 5 }}>
+                            <TouchableOpacity onPress={()=>navigation.navigate("DetalleHerramienta")} style={{ backgroundColor: "#F97316", paddingVertical: 5, paddingHorizontal: 10, borderRadius: 5 }}>
                                 <Text style={{ color: "white", fontSize: 12 }}>Ver detalles</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={{ backgroundColor: "gray", paddingVertical: 5, paddingHorizontal: 10, borderRadius: 5 }} >

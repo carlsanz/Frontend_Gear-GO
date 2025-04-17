@@ -69,15 +69,17 @@ const Rentadas = ({navigation}) => {
 const styles = StyleSheet.create({
     header: {
       backgroundColor: "#F97316",
-      height: 150,
-      justifyContent: "space-between",
+      height: 170,
+      flexDirection: "column",
+      justifyContent:"center",
+      alignContent: "space-between"
     },
     headerContent: {
       padding: 20,
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
-      height: 80,
+      
     },
     profileImage: {
       width: 60,
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
-      height: 80,
+      
     },
     headerText: {
       color: "white",

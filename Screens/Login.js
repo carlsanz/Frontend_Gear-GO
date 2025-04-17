@@ -10,7 +10,7 @@ const Login = ({navigation}) => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://localhost:5000/login/user", {
+      const response = await fetch("http://192.168.65.171:5000/login/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, contrasena }),

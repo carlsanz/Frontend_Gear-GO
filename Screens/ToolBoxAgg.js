@@ -56,15 +56,15 @@ const ToolBoxAgg = ({navigation}) => {
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <FontAwesome name="bars" size={24} color="white" />
-          <Image source={require("../assets/perfil.jpeg")} style={styles.profileImage} />
           <FontAwesome name="bell" size={24} color="white" />
         </View>
         <View style={styles.headerName}>
-          <Text style={styles.headerText}>LISBETH DANIELA ERAZO</Text>
+          <Text style={styles.headerText}>CAJA DE HERRAMIENTAS</Text>
         </View>
+      </View>
 
-        {/* Botones de Filtro */}
-        <View style={styles.filterButtons}>
+              {/* Botones de Filtro */}
+              <View style={styles.filterButtons}>
           <TouchableOpacity 
             style={[styles.filterButton, selectedTab === "todas" && { backgroundColor: "#F5F5F5", borderTopRightRadius: 8 }]} 
             onPress={() => setSelectedTab("todas")}
@@ -83,7 +83,6 @@ const ToolBoxAgg = ({navigation}) => {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
 
       {/* Renderización de las listas según la pestaña seleccionada */}
       {selectedTab === "renta" ? (
@@ -121,27 +120,29 @@ const ToolBoxAgg = ({navigation}) => {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: "#F97316",
-    height: 200,
-    justifyContent: "space-between",
+    height: 170,
+    flexDirection: "column",
+    justifyContent:"center",
+    alignContent: "space-between"
   },
   headerContent: {
     padding: 20,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    height: 80,
+    
   },
   profileImage: {
     width: 60,
     height: 60,
     borderRadius: 30,
-    marginTop: 15,
+    
   },
   headerName: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    height: 80,
+  
   },
   headerText: {
     color: "white",
