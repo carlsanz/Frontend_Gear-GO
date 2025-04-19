@@ -1,52 +1,86 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet } from "react-native";
+import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet, Pressable } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
-// Herramientas disponibles
-const toolsAvailable = [
-  { id: "1", name: "TALADRO ELÉCTRICO", price: "Hora: 4.00 HNL\nDía: 100.00 HNL\nSemana: 500 HNL", image: require("../assets/taladro.jpeg") },
-  { id: "2", name: "SIERRA ELÉCTRICA", price: "Hora: 4.00 HNL\nDía: 100.00 HNL\nSemana: 500 HNL", image: require("../assets/sierra.jpeg") },
-];
+const ToolBoxAgg = ({ navigation }) => {
+  const [toolsAvailable, setToolsAvailable] = useState([
+    { id: "1", name: "TALADRO ELÉCTRICO", price: "100.00 HNL", image: require("../assets/taladro.jpeg"), description: "En perfectas condiciones, cuenta con los desarmadores que se muestran en la imagen.", marca: "Marca: MAKITA", modelo: "Makita HT" },
+    { id: "2", name: "PULIDORA", price: "100.00 HNL", image: require("../assets/sierra.jpeg"), description: "En perfectas condiciones", marca: "Marca: MAKITA", modelo: "Makita HT" },
+  ]);
 
-// Herramientas en renta
-const rentedTools = [
-  { id: "1", name: "SIERRA", timeLeft: "2 días", price: "Semana: 500 HNL", client: "Joel Vasquez", image: require("../assets/desarmadores.jpg") }
-];
+  const rentedTools = [
+    {
+      id: "1",
+      name: "SIERRA",
+      timeLeft: "2 días",
+      totalDays: 7, // Número total de días por los que fue rentada
+      price: "Semana: 500 HNL",
+      totalPrice: "500 HNL", // Precio total del alquiler
+      client: "Joel Vasquez",
+      image: require("../assets/desarmadores.jpg"),
+    },
+    {
+      id: "2",
+      name: "SIERRA",
+      timeLeft: "1 día",
+      totalDays: 5,
+      price: "Semana: 500 HNL",
+      totalPrice: "350 HNL", // Precio total del alquiler
+      client: "Joel Vasquez",
+      image: require("../assets/desarmadores.jpg"),
+    },
+  ];
 
-const ToolBoxAgg = ({navigation}) => {
   const [selectedTab, setSelectedTab] = useState("todas");
 
   // Selección de herramientas según la pestaña activa
   const tools = selectedTab === "todas" ? toolsAvailable : rentedTools;
 
-  const ToolItem = ({ item, isRented }) => (
-    <View style={styles.toolContainer}>
+  // Función para quitar herramienta
+  const removeTool = (id) => {
+    setToolsAvailable((prevTools) => prevTools.filter((tool) => tool.id !== id));
+  };
+
+  const ToolItem = ({ item, isRented, navigation }) => (
+    <Pressable
+      style={[styles.toolContainer, isRented && styles.toolContainerRented]}
+      onPress={() => navigation.navigate("DetalleHerramienta", { tool: item, isRented })}
+    >
+      <Image source={item.image} style={[styles.toolImage, isRented && styles.toolImageRented]} />
       <Text style={styles.toolName}>{item.name}</Text>
-      <Image source={item.image} style={styles.toolImage} />
-      {isRented ? (
-        <>
-          <Text style={styles.toolInfo}>Tiempo restante: {item.timeLeft}</Text>
-          <Text style={styles.toolInfo}>{item.price}</Text>
-          <Text style={styles.toolInfo}>Cliente: {item.client}</Text>
-        </>
-      ) : (
-        <>
-          <Text style={styles.toolInfo}>{item.price}</Text>
-          <TouchableOpacity style={styles.detailsButton}>
-            <Text style={styles.detailsButtonText}>Ver detalles</Text>
-          </TouchableOpacity>
-        </>
-      )}
-    </View>
+      <View style={styles.toolDetails}>
+        {isRented ? (
+          <>
+            <Text style={styles.toolInfo}>Rentada por: {item.client}</Text>
+            <Text style={styles.toolInfo}>Durante: {item.totalDays} días</Text>
+            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <Text style={{fontSize: 13, color: "#F97316", marginVertical: 2,}}>Precio: {item.totalPrice}</Text>
+            <Text style={{fontSize: 13, color: "#FF1B1C", marginVertical: 2,}}>Restan: {item.timeLeft}</Text>
+            </View>
+          </>
+        ) : (
+          <>
+            <Text style={styles.toolInfo}>{item.marca}</Text>
+            <Text style={styles.toolPrice}>{item.price}</Text>
+            <TouchableOpacity
+              style={styles.removeButton}
+              onPress={() => removeTool(item.id)}
+            >
+              <Text style={styles.removeButtonText}>Quitar Herramienta</Text>
+            </TouchableOpacity>
+          </>
+        )}
+      </View>
+    </Pressable>
   );
 
   const ToolList = ({ tools, isRented }) => (
     <FlatList
-      style={styles.list}
       data={tools}
       keyExtractor={(item) => item.id}
-      numColumns={isRented ? 1 : 2}
-      renderItem={({ item }) => <ToolItem item={item} isRented={isRented} />}
+      numColumns={isRented ? 1 : 2} // 1 columna para herramientas en renta, 2 para disponibles
+      contentContainerStyle={{ paddingHorizontal: 8 }}
+      renderItem={({ item }) => <ToolItem item={item} isRented={isRented} navigation={navigation} />}
     />
   );
 
@@ -63,26 +97,26 @@ const ToolBoxAgg = ({navigation}) => {
         </View>
       </View>
 
-              {/* Botones de Filtro */}
-              <View style={styles.filterButtons}>
-          <TouchableOpacity 
-            style={[styles.filterButton, selectedTab === "todas" && { backgroundColor: "#F5F5F5", borderTopRightRadius: 8 }]} 
-            onPress={() => setSelectedTab("todas")}
-          >
-            <Text style={{ color: selectedTab === "todas" ? "black" : "white" }}>
-              Todas las Herramientas
-            </Text>
-          </TouchableOpacity>
+      {/* Botones de Filtro */}
+      <View style={styles.filterButtons}>
+        <TouchableOpacity
+          style={[styles.filterButton, selectedTab === "todas" && { backgroundColor: "#F5F5F5", borderTopRightRadius: 8 }]}
+          onPress={() => setSelectedTab("todas")}
+        >
+          <Text style={{ color: selectedTab === "todas" ? "black" : "white" }}>
+            Todas las Herramientas
+          </Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity 
-            style={[styles.filterButton, selectedTab === "renta" && { backgroundColor: "#F5F5F5", borderTopLeftRadius: 8 }]} 
-            onPress={() => setSelectedTab("renta")}
-          >
-            <Text style={{ color: selectedTab === "renta" ? "black" : "white" }}>
-              En renta
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={[styles.filterButton, selectedTab === "renta" && { backgroundColor: "#F5F5F5", borderTopLeftRadius: 8 }]}
+          onPress={() => setSelectedTab("renta")}
+        >
+          <Text style={{ color: selectedTab === "renta" ? "black" : "white" }}>
+            En renta
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       {/* Renderización de las listas según la pestaña seleccionada */}
       {selectedTab === "renta" ? (
@@ -108,9 +142,9 @@ const ToolBoxAgg = ({navigation}) => {
           <Image source={require("../assets/iconoHome.png")} style={{ width: 40, height: 30 }} />
           <Text style={styles.navText}>Inicio</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{ alignItems: "center" }} >
+        <TouchableOpacity style={{ alignItems: "center" }}>
           <FontAwesome name="briefcase" size={24} color="#F97316" />
-          <Text style={{ fontSize: 12, color: "#F97316",  }}>ToolBox</Text>
+          <Text style={{ fontSize: 12, color: "#F97316" }}>ToolBox</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -154,12 +188,14 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 40,
     backgroundColor: "#F97316",
+    marginBottom:16
   },
   filterButton: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     height: "100%",
+    
   },
   selectedButton: {
     backgroundColor: "#F5F5F5",
@@ -168,34 +204,65 @@ const styles = StyleSheet.create({
   toolContainer: {
     backgroundColor: "white",
     margin: 8,
-    padding: 12,
     borderRadius: 8,
-    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    
+    width: "46%", // Por defecto, ocupa el 46% del ancho para herramientas disponibles
+  },
+  toolContainerRented: {
+    width: "95%", // Ocupa casi todo el ancho para herramientas en renta
+    height: 350, // Aumenta la altura para acomodar más información
+  },
+  toolImage: {
+    marginTop: 10,
+    width: "100%",
+    height: 150,
+    resizeMode: "stretch"
+    
+  },
+  toolImageRented: {
+    width: "100%",
+    height: 200, // Aumenta la altura de la imagen para herramientas en renta
+    resizeMode: "cover",
+    
   },
   toolName: {
     fontWeight: "bold",
-    textAlign: "center",
+    fontSize: 13,
+    margin: 6,
   },
-  toolImage: {
-    width: "100%",
-    height: 100,
-    resizeMode: "contain",
-    marginBottom: 8,
+  toolDetails: {
+    justifyContent: "space-between",
+    paddingHorizontal: 8,
+    paddingBottom: 8,
   },
   toolInfo: {
-    fontSize: 12,
+    fontSize: 13, // Aumenta ligeramente el tamaño del texto para mejor legibilidad
     color: "gray",
+    marginVertical: 2,
   },
+  toolPrice: {
+    fontSize: 13,
+    color: "#F97316",
+    fontWeight: "bold",
+    marginVertical: 4,
+  },
+ 
   detailsButton: {
-    marginTop: 8,
+    marginTop: 6,
     backgroundColor: "#F97316",
     paddingVertical: 6,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     borderRadius: 4,
   },
   detailsButtonText: {
     color: "white",
-    fontSize: 12,
+    fontSize: 11, // Ajusta el tamaño del texto del botón
+    fontWeight: "bold",
   },
   list: {
     marginTop: 20,
@@ -232,6 +299,20 @@ const styles = StyleSheet.create({
   },
   activeNavText: {
     color: "#F97316",
+  },
+  removeButton: {
+    width: "100%",
+    marginTop: 8,
+    backgroundColor: "#FF1B1C",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  removeButtonText: {
+    color: "white",
+    fontSize: 12,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 

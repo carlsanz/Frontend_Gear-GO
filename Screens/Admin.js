@@ -1,6 +1,5 @@
 import React from "react";
-import { View,Text, SafeAreaView, TouchableOpacity, Image} from "react-native"
-import {Button} from 'react-native-paper'
+import { View,Text, SafeAreaView, TouchableOpacity, Image} from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from "react-native";
 

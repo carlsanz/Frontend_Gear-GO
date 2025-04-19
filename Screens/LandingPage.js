@@ -7,8 +7,8 @@ import React, { useState } from "react";
 const herramientas = [
   { id: "1", nombre: "Martillo", imagen: require("../assets/pulidora@3X.png") },
   { id: "2", nombre: "Destornillador", imagen: require("../assets/pulidora@3X.png") },
-  { id: "3", nombre: "Llave Inglesa", imagen: require("../assets/taladro@3X.png") },
-  { id: "4", nombre: "Sierra", imagen: require("../assets/taladro@3X.png") },
+  { id: "3", nombre: "Llave Inglesa", imagen: require("../assets/taladro2.png") },
+  { id: "4", nombre: "Sierra", imagen: require("../assets/taladro2.png") },
 ];
 
 export default function LandingPage() {

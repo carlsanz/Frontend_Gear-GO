@@ -6,7 +6,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { ScrollView } from "react-native";
 
 const tools =[
-    {id: 1, name: 'Taladro Eléctrico', price: '100 Lps', image: require('../assets/taladro@3X.png'),
+    {id: 1, name: 'Taladro Eléctrico', price: '100 Lps', image: require('../assets/taladro2.png'),
         description: 'Taladro eléctrico de alta potencia para realizar trabajos de perforación en excelente estado'
     },
     {id: 2, name: 'Pulidora', price: '100 Lps', image: require('../assets/pulidora@3X.png'),

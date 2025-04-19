@@ -1,16 +1,28 @@
-import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, FlatList, TextInput } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, Image, TouchableOpacity, FlatList, TextInput, Pressable } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
-const tools = [
-  { id: "1", name: "TALADRO ELÉCTRICO", price: "Hora: 4.00 HNL\nDía: 100.00 HNL\nSemana: 500 HNL", image: require("../assets/taladro.jpeg") },
-  { id: "2", name: "PULIDORA", price: "Hora: 4.00 HNL\nDía: 100.00 HNL\nSemana: 500 HNL", image: require("../assets/sierra.jpeg") },
-//   { id: "3", name: "SET DE DESAMADORES", price: "4.00 HNL", image: require("../assets/desarmadores.jpeg"), description: "En perfectas condiciones, cuenta con los desarmadores que se muestran en la imagen." },
-//   { id: "4", name: "SET DE TENAZAS", price: "Hora: 4.00 HNL\nDía: 100.00 HNL\nSemana: 500 HNL", image: require("../assets/tenazas.jpeg") },
-];
-
-const Home = ({navigation}) => {
+const Home = ({ navigation }) => {
+    const [tools, setTools] = useState([]); // Estado para almacenar las herramientas
     const [selectedCategory, setSelectedCategory] = useState("Carpinteria");
+
+    // Función para obtener las herramientas desde el backend
+    const fetchHerramientas = async () => {
+        try {
+            const response = await fetch("http://192.168.43.26:5000/api/home/herramientas"); // Cambia la URL si es necesario
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setTools(data); // Actualiza el estado con las herramientas obtenidas
+        } catch (error) {
+            console.error('Error al obtener las herramientas:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchHerramientas();
+    }, []);
 
     return (
         <View style={{ flex: 1, backgroundColor: "#F5F5F5" }}>
@@ -18,7 +30,7 @@ const Home = ({navigation}) => {
             <View style={{ backgroundColor: "#F97316", padding: 20, height: 170, flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
                 <FontAwesome name="bars" size={24} color="white" />
                 <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>GEAR-GO</Text>
-                <Image source={require("../assets/perfil.jpeg")} style={{width: 50, height: 50, borderRadius: 30}} />
+                <Image source={require("../assets/perfil.jpeg")} style={{ width: 50, height: 50, borderRadius: 30 }} />
             </View>
 
             {/* Barra de búsqueda */}
@@ -39,24 +51,31 @@ const Home = ({navigation}) => {
             {/* Lista de herramientas */}
             <FlatList
                 data={tools}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.id_herramienta.toString()} // Usa el ID de la herramienta como clave
                 numColumns={2}
                 contentContainerStyle={{ paddingHorizontal: 10 }}
                 renderItem={({ item }) => (
-                    <View style={{ flex: 1, backgroundColor: "white", margin: 8, padding: 10, borderRadius: 10, elevation: 3 }}>
-                        <Image source={item.image} style={{ width: "100%", height: 80, resizeMode: "contain", marginBottom: 8 }} />
-                        <Text style={{ fontWeight: "bold" }}>{item.name}</Text>
-                        <Text style={{ fontSize: 12, color: "gray", marginVertical: 4 }}>{item.price}</Text>
-                        {item.description && <Text style={{ fontSize: 10, color: "gray" }}>{item.description}</Text>}
-                        <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 8 }}>
-                            <TouchableOpacity onPress={()=>navigation.navigate("DetalleHerramienta")} style={{ backgroundColor: "#F97316", paddingVertical: 5, paddingHorizontal: 10, borderRadius: 5 }}>
-                                <Text style={{ color: "white", fontSize: 12 }}>Ver detalles</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{ backgroundColor: "gray", paddingVertical: 5, paddingHorizontal: 10, borderRadius: 5 }} >
-                                <Text style={{ color: "white", fontSize: 12 }}>Rentar</Text>
-                            </TouchableOpacity>
+                    <Pressable
+                        onPress={() => navigation.navigate("DetalleHerramienta", { tool: item })}
+                        style={{ flex: 1, backgroundColor: "white", margin: 8, paddingTop: 7, borderRadius: 10, elevation: 3, justifyContent: "space-between" }}
+                    >
+                        {/* Mostrar la imagen */}
+                        <Image 
+                            source={{ uri: item.imagen }} // Usa la URL de la imagen
+                            style={{ width: "100%", height: 120, resizeMode: "stretch" }} 
+                        />
+                        <Text style={{ fontWeight: "bold", padding: 6 }}>{item.Nombre}</Text>
+                        <View style={{ paddingHorizontal: 10, paddingBottom: 10 }}>
+                            <Text style={{ fontSize: 12, color: "gray", marginVertical: 4 }}>{item.Marca}</Text>
+                            <Text style={{ fontSize: 12, color: "#F97316", marginVertical: 4, fontWeight: "bold" }}>{item.precio_por_dia} HNL</Text>
+                            {item.descripcion && <Text style={{ fontSize: 10, color: "gray" }}>{item.descripcion}</Text>}
+                            <View style={{ flexDirection: "row", justifyContent: "flex-end", marginTop: 8 }}>
+                                <TouchableOpacity style={{ backgroundColor: "#F97316", paddingVertical: 5, paddingHorizontal: 10, borderRadius: 5 }}>
+                                    <Text style={{ color: "white", fontSize: 12 }}>Rentar</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                    </View>
+                    </Pressable>
                 )}
             />
 
@@ -72,7 +91,7 @@ const Home = ({navigation}) => {
                 </TouchableOpacity>
                 <TouchableOpacity style={{ alignItems: "center" }} onPress={() => navigation.navigate("ToolBoxAgg")}>
                     <FontAwesome name="briefcase" size={24} color="black" />
-                    <Text style={{ textAlign: "center", fontSize: 12 }} >ToolBox</Text>
+                    <Text style={{ textAlign: "center", fontSize: 12 }}>ToolBox</Text>
                 </TouchableOpacity>
             </View>
         </View>

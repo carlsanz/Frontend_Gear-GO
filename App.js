@@ -53,7 +53,7 @@ export default function App() {
     <MessageProvider>
     <NavigationContainer onReady={onLayoutRootView}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="LandingPage" component={DetalleHerramienta} />
+        <Stack.Screen name="LandingPage" component={LandingPage} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="ToolBoxAgg" component={ToolBoxAgg} />
         <Stack.Screen name="Registro" component={Registro} />
@@ -67,7 +67,7 @@ export default function App() {
         <Stack.Screen name="MetodoPago" component={MetodoPago} />
         <Stack.Screen name="Tarjeta" component={Tarjeta} />
         <Stack.Screen name="NuevaHerramienta" component={NuevaHerramienta}/>
-        <Stack.Screen name="DetalleHerramienta" component={LandingPage} />
+        <Stack.Screen name="DetalleHerramienta" component={DetalleHerramienta} />
         <Stack.Screen name="Admin" component={Admin} />
         <Stack.Screen name="ToolsApproval" component={ToolsApproval} />
         <Stack.Screen name="ToolsDetails" component={ToolsDetails} />

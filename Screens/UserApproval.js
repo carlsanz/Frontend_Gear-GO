@@ -8,9 +8,9 @@ const users= [
 {
     id: 1,
     name: 'Jose Manuel Garcia',
-    photo: require('../assets/JoseGarcia.png'),
-    idFront: require('../assets/id1.png'),
-    idBack: require('../assets/id2.png')
+    photo: require('../assets/JoseGarcia.jpeg'),
+    idFront: require('../assets/id1.jpg'),
+    idBack: require('../assets/id2.jpg')
 },
 ];
 
