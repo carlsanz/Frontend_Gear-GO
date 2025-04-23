@@ -23,7 +23,7 @@ const DetalleHerramienta = ({navigation}) => {
 
             </View>
             <ScrollView contentContainerStyle={{ alignItems: "center" }} >
-            <Text style={{fontFamily: 'BebasNeue_400Regular',  fontSize: 18, margin: 10}}>TALADRO ELECTRICO</Text>
+            <Text style={{fontFamily: 'BebasNeue_400Regular',  fontSize: 20, margin: 10}}>TALADRO ELECTRICO</Text>
             <View style={{ width: width }}>
                 <FlatList
                     data={images}
@@ -44,30 +44,80 @@ const DetalleHerramienta = ({navigation}) => {
                 />
                 </View>
 
-            <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 20, marginHorizontal: 15}}>
-                <View style={{height: 60, margin: 15, flexDirection:"column", justifyContent:"space-between", alignItems:"flex-start"}}>
-                    <Text style={{fontFamily: 'Montserrat_400Regular',  fontSize: 18, }}>Tarifa de alquiler</Text>
-                    <Text style={{fontFamily: 'Montserrat_400Regular',  fontSize: 18, }}>Hora: 50.00 HNL</Text>
-                </View>
-                <View>
-                    <TouchableOpacity style={{backgroundColor: "#ffb400", padding: 7, borderRadius: 10, width: 120, height: 50, alignItems: "center", justifyContent: "center"}}>
-                        <Text style={{fontFamily: 'Montserrat_400Regular',  fontSize: 18, color:"#FFF"}}>Rentar</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 20, marginHorizontal: 15}}>
-                <Text style={{fontFamily: 'Montserrat_400Regular',  fontSize: 13, margin: 10}}>Marco Antonio Dominguez</Text>
-                <View style={{flexDirection: "row", justifyContent: "space-evenly", alignItems: "center", }}>
-                <FontAwesome name="star" size={24} color="yellow" />
-                <FontAwesome name="star" size={24} color="yellow" />
-                <FontAwesome name="star" size={24} color="yellow" />    
-                <FontAwesome name="star" size={24} color="yellow" />
-                <FontAwesome name="star" size={24} color="gray"  />
-                </View>
-            </View>
-            <Text style={{fontFamily: 'Montserrat_400Regular',  fontSize: 15, margin: 10}}>Taladro eléctrico de alta potencia, ideal para perforar madera, metal y otros materiales. Ligero y fácil de manejar.</Text>
-            
-            <Text>OPINIONES</Text>
+
+{/********************************* */}
+<View style={{
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginHorizontal: 35, // Margen de 2px a izquierda y derecha
+  marginTop: 10
+}}>
+  <View style={{ flex: 1, flexDirection: "column", alignItems: "flex-start" }}>
+    <Text style={{ fontFamily: 'Montserrat_400Regular', fontSize: 12 }}>
+    {'\n'}{'\n'}Tarifas de alquiler
+    </Text>
+    <Text style={{ fontFamily: 'Montserrat_400Regular', fontSize: 12 }}>
+    {'\n'}Hora: 10.00 HNL
+    </Text>
+  </View>
+
+  <TouchableOpacity style={{
+    backgroundColor: "#ffb400",
+    paddingHorizontal: 15,
+    paddingVertical: 6,
+    borderRadius: 10,
+    marginLeft: 30,
+    marginTop: 20
+  }}>
+    <Text style={{
+      fontFamily: 'Montserrat_400Regular',
+      fontSize: 13,
+      color: "#FFF",
+      
+    }}>Rentar</Text>
+  </TouchableOpacity>
+</View>
+
+
+
+{/********************************* */}
+
+<View style={{
+  flexDirection: "row",
+  justifyContent: "space-between", 
+  alignItems: "center",
+  marginHorizontal: 20,
+  marginTop: 10
+}}>
+  <Text style={{
+    fontFamily: 'Montserrat_400Regular',
+    fontSize: 13,
+    flex: 1 
+  }}>
+    {'\n'}{'\n'}{'\n'}Marco Antonio Dominguez
+  </Text>
+
+  <View style={{
+    flexDirection: "row",
+    gap: 5,
+    marginTop: 40, 
+  }}>
+    <FontAwesome name="star" size={16} color="yellow" />
+    <FontAwesome name="star" size={16} color="yellow" />
+    <FontAwesome name="star" size={16} color="yellow" />
+    <FontAwesome name="star" size={16} color="yellow" />
+    <FontAwesome name="star" size={16} color="gray" />
+  </View>
+</View>
+
+
+<Text style={{ fontFamily: 'Montserrat_400Regular', fontSize: 14, marginHorizontal: 20, marginTop: 15, textAlign: "justify" }}>
+{'\n'}Taladro eléctrico de la marca FLEX, para todo tipo de trabajo. Batería de 24V de alto rendimiento para un uso prolongado sin interrupciones.{"\n\n"}
+  {'\n'}Incluye: Taladro, batería y cargador.
+</Text>
+                    
+            <Text>{'\n'}{'\n'}OPINIONES{'\n'}{'\n'}</Text>
             <ScrollView style={{width:"80%", backgroundColor:"gray", height:150}} >
 
             </ScrollView>
