@@ -90,7 +90,7 @@ const ToolBoxAgg = ({ navigation }) => {
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <FontAwesome name="bars" size={24} color="white" />
-          <FontAwesome name="bell" size={24} color="white" />
+          <TouchableOpacity onPress={() => navigation.navigate("Notificaciones")}><FontAwesome name="bell" size={24} color="white" /></TouchableOpacity>
         </View>
         <View style={styles.headerName}>
           <Text style={styles.headerText}>CAJA DE HERRAMIENTAS</Text>

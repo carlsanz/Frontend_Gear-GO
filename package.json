@@ -13,7 +13,7 @@
     "@expo-google-fonts/montserrat": "^0.2.3",
     "@expo/metro-runtime": "~4.0.1",
     "@react-native-community/checkbox": "^0.5.17",
-    "@react-native-picker/picker": "^2.11.0",
+    "@react-native-picker/picker": "2.9.0",
     "@react-navigation/native": "^7.0.15",
     "@react-navigation/stack": "^7.1.2",
     "expo": "52.0.38",
@@ -32,7 +32,8 @@
     "react-native-svg": "^15.11.2",
     "react-native-svg-transformer": "^1.5.0",
     "react-native-vector-icons": "^10.2.0",
-    "react-native-web": "~0.19.13"
+    "react-native-web": "~0.19.13",
+    "undefined": "\\"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

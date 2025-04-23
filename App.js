@@ -27,6 +27,7 @@ import ToolsApproval from './Screens/ToolsApproval';
 import ToolsDetails from './Screens/ToolsDetails';
 import UserApproval from './Screens/UserApproval';
 import UserDetails from './Screens/UserDetails';
+import Notificaciones from "./Screens/Notificaciones";
 
 const Stack = createStackNavigator();
 
@@ -73,6 +74,7 @@ export default function App() {
         <Stack.Screen name="ToolsDetails" component={ToolsDetails} />
         <Stack.Screen name="UserApproval" component={UserApproval} />
         <Stack.Screen name="UserDetails" component={UserDetails} />
+        <Stack.Screen name="Notificaciones" component={Notificaciones} />
       </Stack.Navigator>
     </NavigationContainer>
     </MessageProvider>
