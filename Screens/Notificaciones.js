@@ -8,8 +8,6 @@ const Notificaciones = ({ navigation }) => {
   const [notifications, setNotifications] = useState([]); // Estado para almacenar las notificaciones
   const [loading, setLoading] = useState(true); // Estado para manejar el indicador de carga
 
-  // Simula el usuario logueado
-  const loggedInUser = user.id_usuario; // Cambia el ID según el usuario logueado
 
   // Función para obtener las notificaciones desde el backend
   const fetchNotifications = async () => {
@@ -32,7 +30,7 @@ const Notificaciones = ({ navigation }) => {
   const sendNotificationDenegacion = async (senderId, receiverId, toolName) => {
     try {
         const notificationData = {
-            alquiler_id: null, // Si no está relacionado con un alquiler, puedes enviar `null`
+            alquiler_id: null,
             sender_id: receiverId, // Usuario logueado como remitente
             receiver_id: senderId, // Usuario que envió la solicitud original
             tipo_notificacion: 'Denegación',
@@ -59,6 +57,39 @@ const Notificaciones = ({ navigation }) => {
         }
     } catch (error) {
         console.error('Error al enviar la notificación:', error);
+    }
+  };
+
+  const sendNotificationAceptacion = async (senderId, receiverId, toolName) => {
+    try {
+        const notificationData = {
+            alquiler_id: null,
+            sender_id: receiverId, // Usuario logueado como remitente
+            receiver_id: senderId, // Usuario que envió la solicitud original
+            tipo_notificacion: 'Aceptada',
+            contenido: `Tu solicitud para alquilar la herramienta "${toolName}" ha sido aceptada.`,
+            estado: 'no leída',
+        };
+
+        console.log('Datos enviados al backend (Aceptada):', notificationData);
+
+        const response = await fetch('http://192.168.1.10:5000/notificaciones/crear', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(notificationData),
+        });
+
+        if (response.ok) {
+            console.log('Notificación aceptada correctamente');
+        } else {
+            console.error('Error al aceptar la notificación');
+            const errorData = await response.json();
+            console.error('Detalles del error:', errorData);
+        }
+    } catch (error) {
+        console.error('Error al aceptar la notificación:', error);
     }
   };
 
@@ -94,41 +125,64 @@ const Notificaciones = ({ navigation }) => {
               <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%", margin: 10 }}>
                 <Text style={{ fontSize: 12, fontWeight: "bold", marginTop: 4 }}>{item.sender}</Text>
                 <Text style={{ fontWeight: "bold", textAlign: "center" }}>{item.type}</Text>
-            </View>
-            <Text style={{ textAlign: "center", fontSize: 12, color: "gray", marginTop: 4 }}>{item.message}</Text>
-            <Text style={{ textAlign: "center", fontSize: 12, color: "gray", marginTop: 4 }}>Herramienta: {item.toolName}</Text>
-            <Text style={{ textAlign: "center", fontSize: 12, color: "gray", marginTop: 4 }}>Días: {item.totalDays}</Text>
-            <Text style={{ textAlign: "center", fontSize: 12, color: "gray", marginTop: 4 }}>Precio Total: {item.totalPrice} HNL</Text>
-            <View style={{ flexDirection: "row", justifyContent: "space-evenly", width: "100%", marginTop: 10 }}>
+              </View>
+              <Text style={{ textAlign: "center", fontSize: 12, color: "gray", marginTop: 4 }}>{item.message}</Text>
+              <Text style={{ textAlign: "center", fontSize: 12, color: "gray", marginTop: 4 }}>Herramienta: {item.toolName}</Text>
+              <Text style={{ textAlign: "center", fontSize: 12, color: "gray", marginTop: 4 }}>Días: {item.totalDays}</Text>
+              <Text style={{ textAlign: "center", fontSize: 12, color: "gray", marginTop: 4 }}>Precio Total: {item.totalPrice} HNL</Text>
+              
+              {/* Renderiza los botones según el tipo de notificación */}
+              {item.type === "Aceptada" ? (
                 <TouchableOpacity
+                  style={{
+                    marginTop: 8,
+                    backgroundColor: "#4CAF50",
+                    paddingVertical: 6,
+                    paddingHorizontal: 16,
+                    borderRadius: 4,
+                  }}
+                  onPress={() => {
+                    console.log('Redirigiendo a la pantalla de métodos de pago...');
+                    navigation.navigate("Pagos", { notification: item }); // Navega a la pantalla MetosPago
+                  }}
+                >
+                  <Text style={{ color: "white", fontSize: 12 }}>Pagar</Text>
+                </TouchableOpacity>
+              ) : item.type !== "Denegación" && (
+                <View style={{ flexDirection: "row", justifyContent: "space-evenly", width: "100%", marginTop: 10 }}>
+                  <TouchableOpacity
                     style={{
-                        marginTop: 8,
-                        backgroundColor: "#FF1B1C",
-                        paddingVertical: 6,
-                        paddingHorizontal: 16,
-                        borderRadius: 4,
+                      marginTop: 8,
+                      backgroundColor: "#FF1B1C",
+                      paddingVertical: 6,
+                      paddingHorizontal: 16,
+                      borderRadius: 4,
                     }}
                     onPress={() => {
-                        sendNotificationDenegacion(item.receiver_id, loggedInUser, item.toolName); // Usa la propiedad correcta
-                        console.log('Solicitud denegada');
+                      sendNotificationDenegacion(item.sender_id, user.id_usuario, item.toolName); // Llama a la función para enviar la notificación
+                      console.log('Solicitud denegada');
                     }}
-                >
+                  >
                     <Text style={{ color: "white", fontSize: 12 }}>Denegar</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
+                  </TouchableOpacity>
+                  <TouchableOpacity
                     style={{
-                        marginTop: 8,
-                        backgroundColor: "#FFB400",
-                        paddingVertical: 6,
-                        paddingHorizontal: 16,
-                        borderRadius: 4,
+                      marginTop: 8,
+                      backgroundColor: "#FFB400",
+                      paddingVertical: 6,
+                      paddingHorizontal: 16,
+                      borderRadius: 4,
                     }}
-                    onPress={() => navigation.navigate("DetalleNotificacion", { notification: item })}
-                >
+                    onPress={() => {
+                      sendNotificationAceptacion(item.sender_id, user.id_usuario, item.toolName);
+                      console.log('Solicitud aceptada');
+                    }}
+                  >
                     <Text style={{ color: "white", fontSize: 12 }}>Aceptar</Text>
-                </TouchableOpacity>
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
-        </View>
           )}
         />
       )}
