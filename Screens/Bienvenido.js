@@ -1,14 +1,25 @@
 import { useFonts, Montserrat_100Thin, Montserrat_400Regular, Montserrat_300Light } from '@expo-google-fonts/montserrat';
-import { StyleSheet, Text, View, TextInput, SafeAreaView, Image, TouchableOpacity, ScrollView } from 'react-native';
-import React, { useState } from "react";
+import { StyleSheet, Text, View, SafeAreaView, Image } from 'react-native';
+import React, { useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
 
 export default function Bienvenido() {
+  const navigation = useNavigation();
+
   const [fontsLoaded] = useFonts({
     Montserrat_100Thin,
     Montserrat_400Regular,
     Montserrat_300Light,
   });
+
+  // Redirige a la pantalla Home después de 2 segundos
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.navigate("Login"); // Navega a la pantalla Home
+    }, 2000);
+
+    return () => clearTimeout(timer); // Limpia el temporizador al desmontar el componente
+  }, [navigation]);
 
   if (!fontsLoaded) {
     return null;
@@ -43,7 +54,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     position: 'absolute',
-    top:80,
+    top: 80,
     marginBottom: 0,
   },
   textoPrincipal: {
@@ -52,14 +63,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat_400Regular',
     textAlign: "center",
     marginBottom: 10,
-    marginTop:140
-  
+    marginTop: 140,
   },
   textoBienvenido: {
     color: "white",
     fontSize: 40,
     fontFamily: 'Montserrat_300Light',
     textAlign: "center",
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
 });

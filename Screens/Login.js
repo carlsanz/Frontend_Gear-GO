@@ -53,13 +53,12 @@ const Login = ({navigation}) => {
       {/* Inputs */}
       <TextInput
         placeholder="Correo"
-        placeholderTextColor="#000"
         value={email}
         onChangeText={setEmail}
         style={[
           { 
             width: "100%", 
-            backgroundColor: "white", 
+            backgroundColor: "white", // Fondo blanco por defecto
             color: "black", 
             paddingHorizontal: 16, 
             paddingVertical: 12,  
@@ -67,19 +66,18 @@ const Login = ({navigation}) => {
             marginTop: 16,
             
           },
-          error && { backgroundColor: "#f8d7da", borderWidth: 2, borderColor: "#e74c3c" } // Aplica borde rojo si hay error
+          error && { borderWidth: 2, borderColor: "#e74c3c" } // Aplica borde rojo solo si hay error
         ]}
       />
       <TextInput
-        placeholder=""
-        placeholderTextColor="#000"
+        placeholder="Contraseña"
         secureTextEntry
         value={contrasena}
         onChangeText={setContrasena}
         style={[
           { 
             width: "100%", 
-            backgroundColor: "white", 
+            backgroundColor: "white", // Fondo blanco por defecto
             color: "black", 
             paddingHorizontal: 16, 
             paddingVertical: 12,  
@@ -87,7 +85,7 @@ const Login = ({navigation}) => {
             marginTop: 16,
     
           },
-          error && { backgroundColor: "#f8d7da", borderWidth: 2, borderColor: "#e74c3c" } // Aplica borde rojo si hay error
+          error && { borderWidth: 2, borderColor: "#e74c3c" } // Aplica borde rojo solo si hay error
         ]}
       />
 
@@ -98,7 +96,13 @@ const Login = ({navigation}) => {
 
       {/* Enlace de registro */}
       <Text style={{ color: "white", marginTop: 16 }}>
-        ¿No tienes cuenta? <Text style={{ color: "black", fontWeight: "bold", fontFamily: "Montserrat" }}>Regístrate</Text>
+        ¿No tienes cuenta?{' '}
+        <Text
+          style={{ color: "black", fontWeight: "bold", fontFamily: "Montserrat" }}
+          onPress={() => navigation.navigate("Registro")} // Navega a la pantalla Registro
+        >
+          Regístrate
+        </Text>
       </Text>
 
       
