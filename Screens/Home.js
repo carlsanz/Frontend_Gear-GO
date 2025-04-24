@@ -31,7 +31,7 @@ const Home = ({ navigation }) => {
     // Función para obtener las herramientas desde el backend
     const fetchHerramientas = async () => {
         try {
-            const response = await fetch("http://192.168.1.10:5000/api/home/herramientas"); // Cambia la URL si es necesario
+            const response = await fetch("http://192.168.101.1/api/home/herramientas"); // Cambia la URL si es necesario
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

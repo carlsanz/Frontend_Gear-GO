@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigation } from '@react-navigation/native';
 import { View, Text, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 
 const Categoria = () => {
@@ -10,6 +11,7 @@ const Categoria = () => {
     ];
     const [seleccionadas, setSeleccionadas] = useState([]);
 
+    const navigation = useNavigation();
     const toggleSeleccion = (categoria) => {
         setSeleccionadas((prev) =>
             prev.includes(categoria)
@@ -68,7 +70,11 @@ const Categoria = () => {
                         paddingVertical: 12,
                         paddingHorizontal: 20,
                         borderRadius: 10
-                    }}>
+                    }}
+                    
+                    onPress={() => navigation.navigate('ToolBoxAgg')}
+                    
+                    >
                         <Text style={{ color: 'white', fontWeight: 'bold' }}>Cancelar</Text>
                     </TouchableOpacity>
 
@@ -77,7 +83,11 @@ const Categoria = () => {
                         paddingVertical: 12,
                         paddingHorizontal: 20,
                         borderRadius: 10
-                    }}>
+                    }}
+                    
+                    onPress={() => navigation.navigate('ToolBoxAgg')}
+                    
+                    >
                         <Text style={{ color: 'white', fontWeight: 'bold' }}>Enviar para aprobación</Text>
                     </TouchableOpacity>
                 </View>
