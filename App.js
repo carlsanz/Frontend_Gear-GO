@@ -1,3 +1,4 @@
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useFonts } from "expo-font"
@@ -7,6 +8,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
 
 import { MessageProvider } from './Screens/MessageProvider';
+import { AuthProvider } from "./Screens/AuthContext"; // Ruta al archivo AuthContext
 import Login from "./Screens/Login";
 import ToolBoxAgg from "./Screens/ToolBoxAgg";
 import LandingPage from './Screens/LandingPage';
@@ -51,32 +53,34 @@ export default function App() {
   }
 
   return (
-    <MessageProvider>
-    <NavigationContainer onReady={onLayoutRootView}>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="LandingPage" component={LandingPage} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="ToolBoxAgg" component={ToolBoxAgg} />
-        <Stack.Screen name="Registro" component={Registro} />
-        <Stack.Screen name="RegistroD" component={RegistroD} />
-        <Stack.Screen name="RegistroId" component={RegistroId} />
-        <Stack.Screen name="Bienvenido" component={Bienvenido} />
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Categoria" component={Categoria} />
-        <Stack.Screen name="Rentadas" component={Rentadas} />
-        <Stack.Screen name="Pagos" component={Pagos} />
-        <Stack.Screen name="MetodoPago" component={MetodoPago} />
-        <Stack.Screen name="Tarjeta" component={Tarjeta} />
-        <Stack.Screen name="NuevaHerramienta" component={NuevaHerramienta}/>
-        <Stack.Screen name="DetalleHerramienta" component={DetalleHerramienta} />
-        <Stack.Screen name="Admin" component={Admin} />
-        <Stack.Screen name="ToolsApproval" component={ToolsApproval} />
-        <Stack.Screen name="ToolsDetails" component={ToolsDetails} />
-        <Stack.Screen name="UserApproval" component={UserApproval} />
-        <Stack.Screen name="UserDetails" component={UserDetails} />
-        <Stack.Screen name="Notificaciones" component={Notificaciones} />
-      </Stack.Navigator>
-    </NavigationContainer>
-    </MessageProvider>
+    <AuthProvider>
+      <MessageProvider>
+        <NavigationContainer onReady={onLayoutRootView}>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="LandingPage" component={LandingPage} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="ToolBoxAgg" component={ToolBoxAgg} />
+            <Stack.Screen name="Registro" component={Registro} />
+            <Stack.Screen name="RegistroD" component={RegistroD} />
+            <Stack.Screen name="RegistroId" component={RegistroId} />
+            <Stack.Screen name="Bienvenido" component={Bienvenido} />
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Categoria" component={Categoria} />
+            <Stack.Screen name="Rentadas" component={Rentadas} />
+            <Stack.Screen name="Pagos" component={Pagos} />
+            <Stack.Screen name="MetodoPago" component={MetodoPago} />
+            <Stack.Screen name="Tarjeta" component={Tarjeta} />
+            <Stack.Screen name="NuevaHerramienta" component={NuevaHerramienta}/>
+            <Stack.Screen name="DetalleHerramienta" component={DetalleHerramienta} />
+            <Stack.Screen name="Admin" component={Admin} />
+            <Stack.Screen name="ToolsApproval" component={ToolsApproval} />
+            <Stack.Screen name="ToolsDetails" component={ToolsDetails} />
+            <Stack.Screen name="UserApproval" component={UserApproval} />
+            <Stack.Screen name="UserDetails" component={UserDetails} />
+            <Stack.Screen name="Notificaciones" component={Notificaciones} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </MessageProvider>
+    </AuthProvider>
   );
 }

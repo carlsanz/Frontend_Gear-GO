@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, FlatList, TextInput, Pressable, Modal, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { useAuth } from "../Screens/AuthContext"; // Importa el contexto de autenticación
+
+const toolImages = {
+    1: require("../assets/taladro.jpeg"), // Imagen para la herramienta con id_herramienta 1
+    2: require("../assets/sierra.jpeg"), // Imagen para la herramienta con id_herramienta 2
+    3: require("../assets/desarmadores.jpg"), // Imagen para la herramienta con id_herramienta 3
+    default: require("../assets/placeholder.jpg"), // Imagen predeterminada
+};
 
 const Home = ({ navigation }) => {
     const [tools, setTools] = useState([]); // Estado para almacenar las herramientas
@@ -8,6 +16,7 @@ const Home = ({ navigation }) => {
     const [isModalVisible, setIsModalVisible] = useState(false); // Estado para controlar la visibilidad del modal
     const [selectedTool, setSelectedTool] = useState(null); // Estado para la herramienta seleccionada
     const [rentalDays, setRentalDays] = useState(1); // Estado para la cantidad de días
+    const { user } = useAuth(); // Obtén el usuario logueado desde el contexto
 
     // Función para incrementar los días
     const increaseDays = () => {
@@ -50,6 +59,38 @@ const Home = ({ navigation }) => {
         setSelectedTool(null); // Limpia la herramienta seleccionada
     };
 
+    const SolicitudAlquiler = async () => {
+        if (!selectedTool || !user) return;
+
+        try {
+            const response = await fetch("http://192.168.1.10:5000/alquiler/nuevo", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id_herramienta: selectedTool.id_herramienta, 
+                    id_usuario: user.id_usuario, // ID del usuario logueado
+                    fecha_inicio: new Date().toISOString().split("T")[0], // Fecha actual
+                    fecha_fin: new Date(Date.now() + rentalDays * 24 * 60 * 60 * 1000).toISOString().split("T")[0], // Fecha de fin calculada
+                    total_dias: rentalDays, 
+                    precio_total: selectedTool.precio_por_dia * rentalDays, 
+                    estado: "pendiente", 
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Alquiler creado exitosamente:", data);
+                closeModal(); // Cierra el modal
+            } else {
+                console.error("Error al crear el alquiler:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Error al crear el alquiler:", error);
+        }
+    };
+
     return (
         <View style={{ flex: 1, backgroundColor: "#F5F5F5" }}>
             {/* Encabezado */}
@@ -85,9 +126,9 @@ const Home = ({ navigation }) => {
                         onPress={() => navigation.navigate("DetalleHerramienta", { tool: item })}
                         style={{ flex: 1, backgroundColor: "white", margin: 8, paddingTop: 7, borderRadius: 10, elevation: 3, justifyContent: "space-between" }}
                     >
-                        {/* Mostrar la imagen */}
+                        {/* Mostrar la imagen desde el arreglo */}
                         <Image 
-                            source={{ uri: item.imagen }} // Usa la URL de la imagen
+                            source={toolImages[item.id_herramienta] || toolImages.default} // Usa la imagen correspondiente o la predeterminada
                             style={{ width: "100%", height: 120, resizeMode: "stretch" }} 
                         />
                         <Text style={{ fontWeight: "bold", padding: 6 }}>{item.Nombre}</Text>
@@ -162,10 +203,7 @@ const Home = ({ navigation }) => {
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={[styles.modalButton, { backgroundColor: "#FFB400" }]}
-                                onPress={() => {
-                                    closeModal();
-                                    
-                                }}
+                                onPress={SolicitudAlquiler} // Llama a la función SolicitudAlquiler
                             >
                                 <Text style={[styles.modalButtonText, { color: "white" }]}>Enviar</Text>
                             </TouchableOpacity>
